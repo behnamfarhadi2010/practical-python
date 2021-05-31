@@ -1,5 +1,3 @@
-#pcost.py
-
 import csv
 def pcost(filename):
 
@@ -8,13 +6,14 @@ def pcost(filename):
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
-        for row in rows:
+        for rowno, row in enumerate(rows, start=1):
+            record = dict(zip(headers, row))
             try:
-                nshares = int(row[1])
-                price = float(row[2])
+                nshares = int(record['shares'])
+                price = float(record['price'])
                 tcost += nshares * price
             except ValueError:
-                print('Bad row:', row)
+                print(f'Row {rowno}: Bad row: {row}')
 
     return tcost
 
@@ -28,5 +27,3 @@ cost = pcost(filename)
 print('Total cost:', cost)
 
 # pcost.py
-#
-# Exercise 1.27
