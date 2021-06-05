@@ -1,21 +1,8 @@
+import report
 import csv
 def pcost(filename):
-
-    tcost = 0.0
-
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-        for rowno, row in enumerate(rows, start=1):
-            record = dict(zip(headers, row))
-            try:
-                nshares = int(record['shares'])
-                price = float(record['price'])
-                tcost += nshares * price
-            except ValueError:
-                print(f'Row {rowno}: Bad row: {row}')
-
-    return tcost
+    portfolio = report.read_portfolio(filename)
+    return sum([s['shares']*s['price'] for s in portfolio])
 
 import sys
 if len(sys.argv) == 2:
