@@ -2,10 +2,10 @@
 import csv
 
 
-def parse_csv(filename, select=None, types=None):
+def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=','):
   
     with open(filename) as f:
-        rows = csv.reader(f)
+        rows = csv.reader(f, delimiter=delimiter)
 
         # Read the file headers
         headers = next(rows)
@@ -30,6 +30,9 @@ def parse_csv(filename, select=None, types=None):
             # Make a dictionary
             if types:
                 row = [func(val) for func, val in zip(types, row)]
+            
+            if headers:
+                record = dict(zip(headers, row))
 
             record = dict(zip(headers, row))
             records.append(record)
