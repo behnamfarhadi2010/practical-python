@@ -7,13 +7,15 @@ import fileparse
 
 def read_portfolio(filename):
     
-    portfolio = fileparse.parse_csv(filename, select=['name','shares','price'], types=[str,int,float])
+    with open(filename) as lines:
+        portfolio = fileparse.parse_csv(lines, select=['name','shares','price'], types=[str,int,float])
     return portfolio
 
 def read_prices(filename):
    
-    prices = dict(fileparse.parse_csv(filename,types=[str,float], has_headers=False))
-    return prices
+    with open(filename) as lines:
+        prices= dict(fileparse.parse_csv(lines,types=[str,float], has_headers=False))
+        return prices
    
 
 def make_report(portfolio,prices):
